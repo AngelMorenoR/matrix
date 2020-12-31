@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <style>
+        @media screen and (max-width: 850px) {
+            html{ font-size: 10px }
+        }
+        @media screen and (max-width: 500px) {
+            html{ font-size: 7px }
+        }
+        *, *::before *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing:border-box;
+            overflow: hidden;
+        }
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif
+        }
+        .matrix-container {
+         width: 100vw;
+         height: 100vh;
+         background: black;
+         display: grid;
+         grid: repeat(20, 1fr) / repeat(20, 1fr);
+         overflow: hidden;
+        }
+        .sq {
+            color: rgba(3, 82, 3, 0.864);
+            font-size: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* transition: all 700ms; */
+            cursor: pointer;
+            animation: move ease 2.3s ;
+        }
+        .animated {
+            animation: ab linear 250ms 
+        }
+        @keyframes move {
+            from {
+                transform: translateY(0) ;
+
+            }to{    
+                transform: translateY(1000px);
+                color: rgba(0, 143, 0, 0.953);
+                
+            }
+        }
+
+        @keyframes ab {
+            from{
+                opacity: 1;
+            }to {
+                opacity: 0;
+                /* transform: translateY(0px); */
+
+            }
+        }
+    </style>
+
+    <div class="matrix-container">
+
+    </div>
+
+
+    <script>
+        const container = document.querySelector('.matrix-container')
+        const abc1 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+
+        const randomChoise = number => Math.floor(Math.random() * number)
+
+
+        const animateDasboard = () => {
+            const choise = document.querySelector(`.sq-${randomChoise(document.querySelectorAll('.sq').length)}`)
+            choise.innerHTML = abc1[randomChoise(abc1.length - 1)]
+            choise.classList.toggle('animated')
+            document.querySelectorAll('.sq')[randomChoise(400)].innerHTML = abc1[randomChoise(abc1.length)]
+        }
+        const createDasboard = () => {
+            for(let i = 0; i <= 450; i++ ){
+                const div = document.createElement('div')
+                div.classList.add(`sq`)
+                div.classList.add(`sq-${i}`)
+                container.appendChild(div)
+            }
+        }
+
+
+        createDasboard()
+        setInterval(() => {
+            for(let i = 0; i < 10; i++){
+                animateDasboard()
+            }
+        }, 100)
+        
+
+    </script>
+</body>
+</html>
