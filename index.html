@@ -43,7 +43,7 @@
             animation: move ease 2.3s ;
         }
         .animated {
-            animation: ab linear 250ms 
+            animation: ab linear 250ms
         }
         @keyframes move {
             from {
@@ -60,7 +60,7 @@
             from{
                 opacity: 1;
             }to {
-                opacity: 0;
+                opacity: 1;
                 /* transform: translateY(0px); */
 
             }
@@ -73,35 +73,45 @@
 
 
     <script>
-        const container = document.querySelector('.matrix-container')
-        const abc1 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+        const container = document.querySelector('.matrix-container');
+        const abc1 = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+        const speed = 150;
+        const times = 10;
+        let interval;
+        let squares;
 
-        const randomChoise = number => Math.floor(Math.random() * number)
+
+        const random = number => Math.floor(Math.random() * number);
 
 
         const animateDasboard = () => {
-            const choise = document.querySelector(`.sq-${randomChoise(document.querySelectorAll('.sq').length)}`)
-            choise.innerHTML = abc1[randomChoise(abc1.length - 1)]
+            const choise = squares[random(squares.length -1)]
+            choise.innerHTML = abc1[random(abc1.length - 1)]
             choise.classList.toggle('animated')
-            document.querySelectorAll('.sq')[randomChoise(400)].innerHTML = abc1[randomChoise(abc1.length)]
+            squares[random(squares.length)].innerHTML = abc1[random(abc1.length)]
         }
         const createDasboard = () => {
-            for(let i = 0; i <= 450; i++ ){
-                const div = document.createElement('div')
-                div.classList.add(`sq`)
-                div.classList.add(`sq-${i}`)
-                container.appendChild(div)
-            }
+                for(let i = 0; i <= 400; i++ ){
+                    const div = document.createElement('div')
+                    div.classList.add(`sq`)
+                    div.classList.add(`sq-${i}`)
+                    container.appendChild(div)
+                    squares = [...document.querySelectorAll('.sq')]
+                    
+                }
         }
 
+        const init = (times, speed) => {
+            createDasboard()
+            interval = setInterval(() => {
+                for(let i = 0; i < times; i++){
+                    animateDasboard()
+                }
+            }, speed)
+        }
+      
+        init(times, speed)
 
-        createDasboard()
-        setInterval(() => {
-            for(let i = 0; i < 10; i++){
-                animateDasboard()
-            }
-        }, 100)
-        
 
     </script>
 </body>
